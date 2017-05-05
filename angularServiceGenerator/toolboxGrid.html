@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html class="hidden">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularServiceGenerator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet prefetch' href='https://unpkg.com/vue-material@latest/dist/vue-material.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <div class="app-viewport" id="file-list">
+  <md-sidenav class="md-left md-fixed" ref="sidebar">
+    <md-toolbar class="md-account-header">
+      <md-list class="md-transparent">
+        <md-list-item class="md-avatar-list">
+          <md-avatar class="md-large">
+            <img src="https://placeimg.com/64/64/people/8" alt="People">
+          </md-avatar>
+  
+          <span style="flex: 1"></span>
+  
+          <md-avatar>
+            <img src="https://placeimg.com/40/40/people/3" alt="People">
+          </md-avatar>
+  
+          <md-avatar>
+            <img src="https://placeimg.com/40/40/people/4" alt="People">
+          </md-avatar>
+        </md-list-item>
+  
+        <md-list-item>
+          <div class="md-list-text-container">
+            <span>John Doe</span>
+            <span>johndoe@email.com</span>
+          </div>
+  
+          <md-button class="md-icon-button md-list-action">
+            <md-icon>arrow_drop_down</md-icon>
+          </md-button>
+        </md-list-item>
+      </md-list>
+    </md-toolbar>
+  
+  </md-sidenav>
+  
+  <md-whiteframe md-elevation="3" class="main-toolbar">
+    <md-toolbar class="md-large">
+      <div class="md-toolbar-container">
+    
+  
+        <span style="flex: 1"></span>
+  
+        <md-button class="md-icon-button">
+          <md-icon>search</md-icon>
+        </md-button>
+      </div>
+  
+      <div class="md-toolbar-container">
+        <h2 class="md-title">Angular service toolBox</h2>
+  
+        <a href="createService.html"><md-button class="md-fab md-mini">
+          <md-icon>add</md-icon></a>
+        </md-button>
+      </div>
+    </md-toolbar>
+  </md-whiteframe>
+  
+  <main class="main-content">
+     <md-tabs md-fixed>
+  <md-tab id="movies" md-label="/GET">
+<md-card v-for="service in serviceList">
+  <md-card-header>
+    <div class="md-title">/{{service.type}}</div>
+    <div class="md-subhead">{{service.url}}</div>
+  </md-card-header>
+
+  <md-card-actions>
+    <md-button>Voir</md-button>
+    <md-button>Supprimer</md-button>
+  </md-card-actions>
+</md-card>
+
+  </md-tab>
+
+  <md-tab id="music" md-label="/POST">
+    <p>/POST</p>
+  </md-tab>
+
+   <md-tab id="books" md-label="/DELETE">
+    <p>/DELETE</p>
+  </md-tab>
+
+
+
+  </main>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.2.0/vue-resource.min.js"></script>
+<script src='https://unpkg.com/vue-material@latest'></script>
+
+    <script src="js/toolboxGrid.js"></script>
+
+</body>
+</html>

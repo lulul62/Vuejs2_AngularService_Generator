@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="hidden">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularServiceGenerator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet prefetch' href='https://unpkg.com/vue-material@latest/dist/vue-material.css'>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app-viewport" id="createService">
+  <md-whiteframe md-elevation="3" class="main-toolbar">
+    <md-toolbar class="md-large">
+      <div class="md-toolbar-container">
+
+        <span style="flex: 1"></span>
+
+  
+       <a style="color: white;" href="toolboxGrid.html"> <md-button class="md-icon-button">
+          <md-icon>view_module</md-icon>
+        </md-button> </a>
+      </div>
+  
+      <div class="md-toolbar-container">
+        <h1 class="md-title">Create a new service</h2>
+      </div>
+    </md-toolbar>
+  </md-whiteframe>
+  
+  <main class="main-content">
+    <md-tabs md-fixed>
+  <md-tab id="movies" md-label="/GET">
+  <div v-if="showSuccessNotification === true">
+  <md-card class="md-primary">
+   <h4> <i class="material-icons">done</i> Service added to toolbox with success !</h4>
+  </md-card>
+    </div>
+   <md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <div class="md-title"> What type of service do you need ? </div>
+      <div class="phone-viewport">
+  <md-list>
+    <md-list-item>
+      <md-icon>whatshot</md-icon>
+      <span>I want to do a...</span>
+
+      <md-list-expand>
+        <md-input-container>
+    <label for="type">REST CALL...</label>
+    <md-select name="movie" id="movie" v-model="newService.type">
+      <md-option value="get">/GET</md-option>
+    </md-select>
+  </md-input-container>
+      </md-list-expand>
+    </md-list-item>
+  </md-list>
+</div>
+    </md-card-header-text>
+
+
+  </md-card-header>
+</md-card>
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <div class="md-title">Okay, can you give me more information ?</div>
+      <md-input-container>
+    <label>Url of your service...</label>
+    <md-input v-model="newService.url" placeholder="Exemple : http://my-service/user.com"></md-input>
+  </md-input-container>
+
+      <div class="phone-viewport">
+</div>
+    </md-card-header-text>
+  </md-card-header>
+
+</md-card>
+<md-card>
+
+  
+  <md-card-header>
+    <md-card-header-text>
+      <div class="md-title">Mhhh i see, and whats the name of your data ? <pre><code>{{serviceToBuild}}</code></pre></div>
+       <md-input-container>
+       <label>Name of your data...</label>
+    <md-input v-model="newService.dataName" placeholder="Exemple : userList"></md-input>
+  </md-input-container>
+      <div class="phone-viewport">
+  <md-list>
+   
+  </md-list>
+</div>
+    </md-card-header-text>
+  </md-card-header>
+  <md-card-actions>
+    <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog1">
+  <md-dialog-title style="color: black;">Give a name to your service<md-input-container>
+       <label>Whats the name of your service ?</label>
+    <md-input v-model="newService.name" placeholder="Exemple : getAllUsers"></md-input>
+  </md-input-container></md-dialog-title>
+
+  <md-dialog-content>
+  <code><pre>
+    function {{newService.name}} () {
+    $http.{{newService.type}}("{{newService.url}}").then(function (resp) {
+         if(resp && resp.length >= 1) {
+             vm.{{newService.dataName}} = resp.data;
+         }
+         else {
+           vm.showNotificationEmptyMessage = true;
+         }
+  }, function(err){
+        vm.notificationError = err.statusCode;
+  });
+    }
+ </pre> </code>
+      <div class="phone-viewport">
+</div>
+
+
+  <md-dialog-actions>
+    <md-button class="md-primary" @click.native="addNewService('dialog1')">Save in toolbox</md-button>
+    <md-button class="md-primary" @click.native="closeDialog('dialog1')">Cancel</md-button>
+  </md-dialog-actions>
+</md-dialog>
+
+<md-dialog md-open-from="#fab" md-close-to="#fab" ref="dialog2">
+  <md-dialog-title>Create new note</md-dialog-title>
+
+  <md-dialog-content>
+    <form>
+      <md-input-container>
+        <label>Note</label>
+        <md-textarea></md-textarea>
+      </md-input-container>
+    </form>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <md-button class="md-primary" @click.native="closeDialog('dialog2')">Cancel</md-button>
+    <md-button class="md-primary" @click.native="closeDialog('dialog2')">Create</md-button>
+  </md-dialog-actions>
+</md-dialog>
+
+<md-button class="md-primary md-raised" id="custom" @click.native="openDialog('dialog1')">Show my service</md-button>
+  </md-card-actions>
+</md-card>
+
+
+  </md-tab>
+
+  <md-tab id="music" md-label="/POST">
+    <p>/POST</p>
+  </md-tab>
+
+   <md-tab id="books" md-label="/DELETE">
+    <p>/DELETE</p>
+  </md-tab>
+
+
+
+
+  </main>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/vue.resource/1.2.0/vue-resource.min.js"></script>
+<script src='https://unpkg.com/vue-material@latest'></script>
+    <script src="js/createService.js"></script>
+
+</body>
+</html>
